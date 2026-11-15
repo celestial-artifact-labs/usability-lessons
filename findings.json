@@ -1,0 +1,685 @@
+[
+  {
+    "case": "C-001",
+    "title": "A freshly selected row's value fell below the contrast minimum",
+    "surface": "operator-console",
+    "severity": 4,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-07",
+    "method": "automated-check",
+    "backfilled": true,
+    "heuristics": [
+      "wcag-1.4.3"
+    ],
+    "tags": [
+      "colour-and-contrast"
+    ],
+    "lessons": [
+      "L-016"
+    ],
+    "evidence_kinds": [
+      "path",
+      "commit",
+      "measurement"
+    ],
+    "observation_digest": "sha256:33fb5458fc88026233a55ccfdc1bf68a4aeb117459ad40aaf95021156163d7bc",
+    "goal": "An operator scanning a console's live status rows picks one out to read its current value closely.",
+    "what_went_wrong": "Selecting the row applied a tinted highlight behind its text, and that text kept the same secondary colour used for plain, untinted rows elsewhere on the screen. Against the tint, that colour measured 4.38:1, short of the 4.5:1 minimum an automated accessibility scan checks for, a shortfall of 0.12:1 that an earlier manual review had not caught. The value on the exact row an operator had just chosen to focus on became, of everything visible, the hardest text to read.",
+    "why_it_matters": "Every operator who selects a row meets this text, since selecting a row is what applies the tint in the first place, so the miss sat on an ordinary, frequent action rather than an edge case. It survived an earlier manual review and was later caught by an automated scan. Cosmetic.",
+    "resolution": "The fix scopes a brighter, already-used text colour to just the selected row's tinted background, leaving the shared secondary colour untouched everywhere it already read correctly.\n\nRejected: raising the shared secondary colour for the whole screen, since that colour was correct on the plain background it was originally set for, and the problem was specific to the tinted, selected state alone."
+  },
+  {
+    "case": "C-002",
+    "title": "Alert system labels fell to 3.56:1, short of the accessibility minimum",
+    "surface": "operator-console",
+    "severity": 3,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-07",
+    "method": "automated-check",
+    "backfilled": true,
+    "heuristics": [
+      "wcag-1.4.3",
+      "nielsen-1"
+    ],
+    "tags": [
+      "colour-and-contrast",
+      "feedback"
+    ],
+    "lessons": [],
+    "evidence_kinds": [
+      "path",
+      "commit",
+      "measurement"
+    ],
+    "observation_digest": "sha256:21e6aabf47effe5bc39489f09be0c3857f6ad5a60eadd3ea4ba43711ea79ac78",
+    "goal": "An operator monitoring a console with colour-coded status rows relies on a small label inside each warning row to say which part of the system the warning concerns, read alongside that row's title and its colour.",
+    "what_went_wrong": "That label used the same secondary text colour as plain rows, but a warning row carries a tinted background, and against that tint the colour measured 3.56:1, well under the 4.5:1 minimum contrast an automated accessibility scan checks for. The operator could still read the row's title and its colour without difficulty, since those used different, higher-contrast styling, but had to work to make out the smaller label naming exactly where the problem was. The same secondary colour had already needed an identical, separate correction elsewhere on a tinted background, so this was a second occurrence of one underlying pattern, not a new defect.",
+    "why_it_matters": "The label sits on every warning row the console shows, so the friction recurred anywhere a warning appeared, not on one screen alone. It never stopped the operator from acting on a warning, since the more prominent title and colour still came through clearly, but it added a moment of extra effort to read the one part of the message that names where to look. Moderate.",
+    "resolution": "The label now takes its colour from the row's own severity styling instead of the shared secondary text colour, matching how the earlier, related correction had already handled a different element on the same kind of background.\n\nRejected: lightening the tinted backgrounds themselves, since the tint is what lets an operator tell warning severities apart at a glance, and moving the text colour was the narrower change."
+  },
+  {
+    "case": "C-004",
+    "title": "The mascot was invisible against the page it was drawn for",
+    "surface": "landing",
+    "severity": 3,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-07",
+    "method": "self-test",
+    "backfilled": true,
+    "heuristics": [
+      "wcag-1.4.11",
+      "nielsen-8"
+    ],
+    "tags": [
+      "colour-and-contrast"
+    ],
+    "lessons": [
+      "L-016"
+    ],
+    "evidence_kinds": [
+      "commit",
+      "measurement"
+    ],
+    "observation_digest": "sha256:f970bc15a4c93b4c41afc13e2ce42bd620758a2c45cf83f0e3e72aa38680ec05",
+    "goal": "A visitor opens the dark-themed landing page of a game's site and expects to see the character central to the whole brand.",
+    "what_went_wrong": "The brand mark's own colouring is close to black, drawn to be checked and approved against a plain white canvas. Rendered on the page's actual near-black background, that same dark colouring came out at 1.08:1 in one measurement and 1.01:1 in another, at two slightly different swatch values: the mark was invisible there, dissolved into the background rather than merely faint. Only the mark's brightly coloured outer element and two small light details remained, floating around an empty space; the figure itself was not there.",
+    "why_it_matters": "Wherever this dark background was used, the mark read as a plain outline instead of the character it was meant to show, so the one thing the brand is built around was not visible there. The gap held for every view of that background until dedicated dark-theme artwork replaced the original. Moderate.",
+    "resolution": "Dedicated versions of the mark were drawn specifically for dark backgrounds, adding a light rim that separates its outline from the background behind it while keeping the character's own colouring dark, offered in two variants, both well above 3:1. The simplified version stays legible at 16 px. Rejected: keeping the original artwork as drawn, because the dark colouring is deliberate and a paler version would no longer be the same figure."
+  },
+  {
+    "case": "C-005",
+    "title": "Brand red and error red were the same red",
+    "surface": "storefront",
+    "severity": null,
+    "preventive": true,
+    "status": "fixed",
+    "observed": "2026-07",
+    "method": "design-review",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-4",
+      "wcag-1.4.1"
+    ],
+    "tags": [
+      "colour-and-contrast",
+      "vocabulary-and-copy"
+    ],
+    "lessons": [],
+    "evidence_kinds": [
+      "commit",
+      "measurement"
+    ],
+    "observation_digest": "sha256:37e8bc3b64a377d35661948de4a8a963bd7dd81a0b95b4b77ef59faf59339d16",
+    "goal": "A shopper moving through a storefront relies on one colour meaning one thing: when something on the page turns red, they expect it to signal an error, without stopping to wonder whether this particular red is just decoration.",
+    "what_went_wrong": "As originally drawn, a mark used across the site's chrome carried a red separated from the interface's own error red by only about 1.43:1 — close enough that the two would look like one colour rather than two. Because that mark is permanent, appearing in the site's navigation on every screen, a shopper would have encountered it beside the one red reserved elsewhere for a genuine problem, including whatever page carried a failed field near the final step of a purchase.",
+    "why_it_matters": "A colour that repeats on every screen and also means nothing in particular slowly teaches a visitor to ignore it, so the one red meant to flag a real problem would have lost some of its power too, at exactly the moment a shopper most needed to trust it. A design review found and fixed this before anything shipped, so no one ever actually saw it, but the same erosion would have recurred on every visit for as long as nothing confined where each red could appear.",
+    "resolution": "The brand's own colour was kept exactly as designed, but confined by a written rule to one place: the mark itself, never a button, a border, or any interface state. The interface's own red keeps its separate meaning, and an error now always carries an icon and explicit text as well as the colour. Rejected: changing the brand's red to move it further from the error colour, because the brand's red is fixed by design, and what needed fixing was where each red is allowed to appear, not which two colours were chosen."
+  },
+  {
+    "case": "C-006",
+    "title": "A themed phrase as the only label on the button that takes the money",
+    "surface": "checkout",
+    "severity": null,
+    "preventive": true,
+    "status": "fixed",
+    "observed": "2026-07",
+    "method": "design-review",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-2",
+      "nielsen-4"
+    ],
+    "tags": [
+      "vocabulary-and-copy"
+    ],
+    "lessons": [
+      "L-017"
+    ],
+    "evidence_kinds": [
+      "commit"
+    ],
+    "observation_digest": "sha256:cb48dbeeff7dca82f68af06ade086f0ec80a7d559bb3c2eb62356a4e34564ae4",
+    "goal": "A first-time shopper on an unfamiliar storefront reaches the final step of a purchase and needs the button that finishes it to say, in plain terms, what pressing it will do before they commit their card to it.",
+    "what_went_wrong": "As originally designed, the control that finished a purchase carried only a themed phrase drawn from the site's own fiction, with no plain-language wording anywhere near it. Someone buying from that seller for the very first time would have reached that button unable to tell whether pressing it would charge a card, send some kind of message, or trigger something inside the site's own theme.",
+    "why_it_matters": "A payment control is exactly the moment a new visitor is most cautious, and hesitation right there is costly: someone unsure what a button does is likely to hesitate right when their card is on the line. Every first-time visitor reaching checkout would have faced the same ambiguous wording, on every single purchase, for as long as the themed phrase stood alone. A design review caught the problem before the page shipped, so no real shopper ever saw it that way.",
+    "resolution": "The themed wording was kept, but moved to a heading where it does no harm, while the control itself was rewritten in plain words naming the action and the amount. Rejected: keeping the themed phrase on the button with a hover hint or a small helper line, because the doubt comes from the exact word under a shopper's finger, and a hover explanation is not available on a touchscreen."
+  },
+  {
+    "case": "C-007",
+    "title": "Violet failed contrast on the dark background, by two different numbers",
+    "surface": "storefront",
+    "severity": null,
+    "preventive": true,
+    "status": "fixed",
+    "observed": "2026-07",
+    "method": "design-review",
+    "backfilled": true,
+    "heuristics": [
+      "wcag-1.4.3",
+      "wcag-1.4.11"
+    ],
+    "tags": [
+      "colour-and-contrast"
+    ],
+    "lessons": [],
+    "evidence_kinds": [
+      "commit",
+      "measurement"
+    ],
+    "observation_digest": "sha256:f6d68a82b6e34922bd64909f6b9a601a5857e673abdb06f45257d0ae29016aa4",
+    "goal": "A shopper browsing a dark-themed storefront relies on every price, link and heading being legible against the background behind it, without needing to squint or guess.",
+    "what_went_wrong": "As proposed, the accent colour chosen for the storefront's dark theme was a violet: one internal document measured it at roughly 3.2:1 there, and a second put it at about 3.4:1 — two different readings for the same violet, both well short of a 4.5:1 minimum generally expected for body text. Had it gone out as proposed, text links, prices, glowing headings and the outline shown around a focused control would all have rendered in that same underperforming violet across the whole storefront, and the separate amber tone reserved for alerts would have sat uncomfortably close to it in appearance.",
+    "why_it_matters": "Because an accent colour is not a one-off graphic but something that repeats everywhere a theme uses it, a shortfall this size would not have been one broken spot to fix but a pattern across the entire dark storefront, on every visit, for as long as it stood uncorrected. A design review caught the shortfall before anything shipped, so no shopper ever actually encountered it, and the two disagreeing figures for the same rejected colour were left on record rather than resolved.",
+    "resolution": "A different accent colour, a cyan, was chosen instead, on measured headroom well above the minimum, though its own figures disagree too: two documents put the cyan at 11.8:1 while a note in the shipped stylesheet itself gives 10.9:1 for the same colour, and with no measuring method written down beside any of them, nobody has reconciled the two. The rejected colour survives only as a faint background wash where no text depends on it. Rejected: lightening the violet until it cleared the minimum, because once lightened enough to pass, it no longer looked saturated and read as a pastel instead."
+  },
+  {
+    "case": "C-008",
+    "title": "The storefront silently added an item to every shopper's cart",
+    "surface": "catalog",
+    "severity": 1,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-07",
+    "method": "code-read",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-1",
+      "nielsen-3"
+    ],
+    "tags": [
+      "controls-and-state"
+    ],
+    "lessons": [
+      "L-011"
+    ],
+    "evidence_kinds": [
+      "path",
+      "commit"
+    ],
+    "observation_digest": "sha256:c3e03f61a279c2b14e2282da4d6bb57369edd340caa3b94cfbeaf2aa9160aec1",
+    "goal": "A shopper opened a page that lists items for sale, meaning only to compare options before choosing what, if anything, to purchase, with no plan to add anything to a cart yet.",
+    "what_went_wrong": "Code meant only as a stand-in during an earlier stage of building a feature had stayed in place after that feature shipped, and it ran on its own each time the page rendered — a request that changed stored state was issued from the load path, not from any input event — quietly placing an item into the shopper's stored cart without any click, tap, or other input.",
+    "why_it_matters": "The insertion happened without warning on every visit to the page, adding merchandise the shopper had not chosen straight into what would become their order, and it stayed there after the visit ended instead of clearing on its own. Nothing on screen signaled that anything had changed, so a shopper who never noticed could end up paying for goods they never picked out. Blocking.",
+    "resolution": "The unrequested insertion was removed outright, and adding anything to a cart now depends on a deliberate action taken by the shopper rather than happening as a side effect of viewing a page. A dedicated test now checks that opening the page never changes what is in the cart by itself, so the same defect cannot reappear without being caught immediately."
+  },
+  {
+    "case": "C-009",
+    "title": "The home hero rendered about 96px wide on a phone",
+    "surface": "landing",
+    "severity": 2,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-07",
+    "method": "self-test",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-8",
+      "wcag-1.4.10"
+    ],
+    "tags": [
+      "layout"
+    ],
+    "lessons": [
+      "L-005"
+    ],
+    "evidence_kinds": [
+      "commit",
+      "measurement"
+    ],
+    "observation_digest": "sha256:917b8fbf5e816c76714de790baa156908e00c59355c1a40b924e259a4c965da6",
+    "goal": "A visitor opened a landing page on a phone, hoping to read the introductory heading and quickly understand what the page was offering before deciding whether to continue.",
+    "what_went_wrong": "The heading's containing box had its width defined as a percentage of the browser viewport, a rule authored and tested only on a spacious desktop monitor, where that fraction still leaves plenty of room. Nothing in the rule adjusted for a much smaller screen: measured on a handheld display 320px across, the very same percentage rendered a box only about 96px wide, barely wider than a couple of letters, so the heading's words broke onto their own lines one after another, forming a tall, cramped column hugging one edge of the screen instead of spanning it.",
+    "why_it_matters": "This was not a rare edge case: every visitor on a narrow screen hit the same distorted layout, with no way to work around it, since resizing a handheld device is not possible. The garbled introduction sat above the fold, so it was often the first thing a new visitor saw, undermining confidence in the page before they had a chance to scroll further. The task stayed completable by scrolling past the mangled heading, but a first-time visitor was likely to misread the page as broken and leave without reading the offer. Serious.",
+    "resolution": "The fix replaced the fixed-percentage width with a scaling rule that blends a minimum and maximum size smoothly across the range of possible screen widths, so the heading now stays readable from a small handheld display up to a large desktop monitor. At the same time, an entrance animation attached to the same heading was updated to honor a visitor's operating-system preference for reduced motion, so it no longer plays for visitors whose systems are set to prefer less on-screen movement."
+  },
+  {
+    "case": "C-010",
+    "title": "The aim barely moved when the mouse did",
+    "surface": "game",
+    "severity": 2,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-08",
+    "method": "user-report",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-1"
+    ],
+    "tags": [
+      "controls-and-state",
+      "method"
+    ],
+    "lessons": [
+      "L-012"
+    ],
+    "evidence_kinds": [
+      "commit",
+      "measurement"
+    ],
+    "observation_digest": "sha256:dff9fdc35f836986c808d661731ef88951d819a2e478ba7dd2ddbf654ad049f3",
+    "goal": "A player in a browser game aims by moving the mouse. An on screen marker is meant to track the pointer so the player can line a strike up on a target that shows itself only briefly. Players often open the game inside an embedded frame, or leave it in a background tab and come back to it later.",
+    "what_went_wrong": "When the game was embedded or sitting in a background tab, dragging the pointer across the play area changed almost nothing. The marker sat close to the centre wherever the pointer went, no strike could be placed, and the screen offered no reason. The horizontal offset that should follow the pointer stayed at 0.00px on every pointer move, and the loop meant to apply it produced no frames at all across a 500ms sample in that state. Two players, independently, raised the same complaint in near identical words. Two stacked failures caused it: all of the marker's motion ran inside an animation frame loop, which browsers pause for hidden and embedded pages, and a guard threw away every pointer move whenever the play area measured 0 by 0, exactly the size such a page reports.",
+    "why_it_matters": "Aiming is the game's one core action, and in the affected view it was dead, so the failure read as broken controls rather than a hidden tab. It had been that way from the day the game shipped until the fix landed, in every session that opened the game that way, though how many sessions ran that way was never counted. In an ordinary foreground window the task still worked; only the affected view failed. Serious.",
+    "resolution": "The first response to a pointer move is now written synchronously inside the event handler itself: a short CSS transition now smooths the movement, and the guard floors the width at a minimum instead of bailing out. The smoke test now requires a real, visible browser window, not a preview pane. Rejected: keeping the animation frame loop and only removing the zero size guard, because the loop itself is what produces zero frames in a hidden or embedded view, so half the failure would have stayed."
+  },
+  {
+    "case": "C-011",
+    "title": "The game launched at a speed only its developer could play",
+    "surface": "game",
+    "severity": 2,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-08",
+    "method": "user-report",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-7",
+      "nielsen-3"
+    ],
+    "tags": [
+      "controls-and-state"
+    ],
+    "lessons": [],
+    "evidence_kinds": [
+      "commit"
+    ],
+    "observation_digest": "sha256:0a2fc103aff03dc900532b5cf55666dbf3df22b159fb70b7cd3b6b0591ca406d",
+    "goal": "A first-time player opens a browser game where a target shows itself for a moment and hides again, and tries to catch it before it disappears.",
+    "what_went_wrong": "At first release the game offered exactly one pace, and it was the fastest one: the same timing the person who built the game had used during their own testing, tuned to reflexes built from playing it over and over. Nothing on screen let a player slow it down or pick something easier. A newcomer's very first attempt landed on that same fastest pace, with the target's window open only as briefly as it would ever be.",
+    "why_it_matters": "Every newcomer's opening session was likely to become a string of misses instead of a few early wins. The gap sat there from the day the game launched until adjustable pacing was added, touching anyone arriving new in that stretch. Serious.",
+    "resolution": "Four selectable paces were added, independent of anything else in the game, so a player can pick how long the target's window stays open. The easiest of the four, 2.2 times the length of the original, became the default; the original fastest pace stayed available as the hardest option, and the choice is remembered for next time. Rejected: adjusting the single original pace in place, because it had already been tuned by the person who built the game, and one value cannot serve both a newcomer and the person the pace was tuned for."
+  },
+  {
+    "case": "C-012",
+    "title": "One room's only warning depends on sound the game cannot yet produce",
+    "surface": "game",
+    "severity": 3,
+    "preventive": false,
+    "status": "open",
+    "observed": "2026-08",
+    "method": "code-read",
+    "backfilled": true,
+    "heuristics": [
+      "wcag-1.3.3",
+      "nielsen-1"
+    ],
+    "tags": [
+      "feedback"
+    ],
+    "lessons": [],
+    "evidence_kinds": [
+      "commit"
+    ],
+    "observation_digest": "sha256:56c1382aa096db3ddf854fc0350c63cc2952af3ecb42075958d086acf5816067",
+    "goal": "A player moving through a room-based game relies on getting some kind of warning before danger reaches them, whatever form that warning is supposed to take in the room they happen to be in.",
+    "what_went_wrong": "One room's warning was designed to be an audio cue only. Because sound has not been implemented in the game at all, that audio channel does not exist yet, in any session, for any player: the room's own designed warning can never fire. Instead, the room leans on its fallback visual cue, and the threat appears suddenly rather than closing in: a player either notices that cue in time or gets no warning at all before it happens.",
+    "why_it_matters": "Because sound is missing across the whole game rather than in just one place, every single visit to that room is affected. Whether a player gets any notice at all before the threat appears depends on catching that cue in the moment. The gap has been present since the game first went out and is still open today. Moderate.",
+    "resolution": "Nothing has been decided yet. One option under consideration is to build the missing audio channel and keep the current visual cue as a second, reinforcing channel; another is to redesign the room's warning to be visual-first from the start, with audio added as reinforcement rather than as the only channel. Neither has been chosen, and the broader question of whether any warning anywhere in the game should be allowed to depend on a single sense is also still open."
+  },
+  {
+    "case": "C-014",
+    "title": "An error state had no landmarks to skip to",
+    "surface": "portfolio",
+    "severity": 3,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-08",
+    "method": "code-read",
+    "backfilled": true,
+    "heuristics": [
+      "wcag-2.4.1",
+      "wcag-1.3.1"
+    ],
+    "tags": [
+      "layout"
+    ],
+    "lessons": [],
+    "evidence_kinds": [
+      "path",
+      "commit"
+    ],
+    "observation_digest": "sha256:203e6854dfb77e3267f08ac8147a5d3aa98f51178a31036e5547786c697edacc",
+    "goal": "A screen reader or keyboard-only visitor to a personal portfolio site relies on a few structural aids to move around any page: a link past repeated header content, a landmark marking where a page's own content begins, and a heading naming what has been reached. Every page, including one that shows an error instead of the content it tried to load, is expected to offer the same three aids.",
+    "what_went_wrong": "On one route, the page's error state carried none of the three. When the content behind it failed to load, the page rendered only the site's shared header navigation followed by an error message, with no landmark marking where the page's content began and no heading naming what had happened. A screen reader or keyboard user landing there had to move through the entire header navigation before reaching the failure itself. This route's error state was one of the views still missing the structure; the same change that fixed it added the identical structure to the others too.",
+    "why_it_matters": "This gap sat on exactly the page a visitor is likeliest to need orientation on: the one telling them something did not work. A sighted visitor still sees the error text; a screen reader or keyboard user had nothing marking where to land and nothing naming what they had reached. The gap was present up to the day it was closed; how long it had existed before that is not known, so every visitor who reached this failure in that window met the same missing structure, not an occasional lapse. Moderate.",
+    "resolution": "The fix folds the error state into the same skip link, landmark and heading structure the loaded page already uses, so the structure no longer depends on the content arriving successfully. An accessibility lint rule was added to the project's lint configuration in the same change, so a route without the structure now fails lint.\n\nRejected: leaving the error state as a plain message, because orientation matters most on exactly the page a visitor reaches when something has already gone wrong."
+  },
+  {
+    "case": "C-015",
+    "title": "An accessibility section was held back from publication until its claims were true",
+    "surface": "portfolio",
+    "severity": null,
+    "preventive": true,
+    "status": "open",
+    "observed": "2026-08",
+    "method": "design-review",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-2"
+    ],
+    "tags": [
+      "vocabulary-and-copy"
+    ],
+    "lessons": [],
+    "evidence_kinds": [
+      "path",
+      "commit"
+    ],
+    "observation_digest": "sha256:84c1a917488f9d016ad8bb91e7c025f08c84357e4d76ef7aa3f97139bb77730a",
+    "goal": "The person who maintains a personal portfolio site set out to publish a short written statement telling visitors how accessible the site is — a claim about the site's own behaviour that a visitor could check by hand against what the site actually does.",
+    "what_went_wrong": "The first draft framed its accessibility claim as a plain count of one thing on the site that met a bar — regions a visitor could jump to — the kind of number that stops being accurate the next time a single page changes. The first draft's figure was 20; when the section was reconciled, the real count had already moved to 23. Before publication, that count was replaced with a claim about what an automated rule enforces on every change, one that blocks a release if the guarantee breaks. The section itself was then kept from rendering at all behind a build-time switch, with an automated test that fails if the switch is turned on by accident, so the statement stays unpublished until its claims hold up on their own.",
+    "why_it_matters": "A written statement about how a product behaves is itself something a visitor can read and hold the product to, not mere decoration; unlike a broken interaction, a false or stale claim like this can sit on a live page indefinitely with nothing anywhere erroring out, noticed only if a visitor checks it by hand or someone happens to revisit the count. Catching the mismatch before publication means no visitor ever read or relied on a claim that was already at risk of drifting from what the site actually did by the very next change.",
+    "resolution": "Turning the statement on is not yet decided. It stays behind its switch until those commitments have actually been delivered; whoever maintains the site decides whether that has now happened to their satisfaction, and the switch follows once it has.\n\nRejected: publishing the reconciled statement immediately, with the switch already on; the drafted claims were judged not yet trustworthy enough on their own, a decision independent of the other accessibility work that shipped live in the same change."
+  },
+  {
+    "case": "C-016",
+    "title": "Two console controls failed behind an otherwise passing test suite",
+    "surface": "operator-console",
+    "severity": 1,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-08",
+    "method": "self-test",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-9",
+      "nielsen-1"
+    ],
+    "tags": [
+      "feedback",
+      "method"
+    ],
+    "lessons": [
+      "L-012"
+    ],
+    "evidence_kinds": [
+      "commit"
+    ],
+    "observation_digest": "sha256:9e70f59304fd099836234b69042d43239cfa2f6cd33a4d275d6c087985e7eca6",
+    "goal": "An operator running a live, shared process through a console has two controls for changing it mid-run: one loads a predefined set of conditions into it, the other deliberately introduces a fault to see how the system responds. Both are meant to be pressed from an ordinary browser tab, the only way an operator reaches this console.",
+    "what_went_wrong": "Every press of either control failed, returning only the browser's own generic, unexplained network error, with nothing on screen to explain why and nothing about the running process changing. The cause sat one layer down: a browser first sends the server a preliminary, cross-origin permission check before letting the real request through, and the server's reply never included the headers needed to allow it, so the browser refused to send the real request at all. The automated tests covering these controls stayed green throughout, since they called the server directly rather than through a browser and so never triggered that preliminary check, and a separate, real-time channel does not trigger it either.",
+    "why_it_matters": "Both controls failed on every single press, and an ordinary browser tab is the only place an operator ever meets them, so the failure was total rather than occasional. Neither one had worked even once from the day it first shipped until the fix landed, so every operator who tried either one before the fix hit the same dead end, with no way to tell what had gone wrong. Blocking.",
+    "resolution": "The server now grants that cross-origin permission correctly for the local machine and for a short list of explicitly allowed addresses, never unconditionally for every origin, since these two controls change a process every other user of the console can see. New automated checks now exercise both controls from inside an actual browser page instead of only calling the server directly.\n\nRejected: granting that permission to every origin without restriction, because these controls change a shared process for everyone watching it; and continuing to rely only on tests that call the server directly, since those had already run green the entire time without ever catching the failure."
+  },
+  {
+    "case": "C-017",
+    "title": "A control's label names the action, and its confirmation names the resulting state",
+    "surface": "operator-console",
+    "severity": 4,
+    "preventive": false,
+    "status": "wont-fix",
+    "observed": "2026-08",
+    "method": "code-read",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-4",
+      "nielsen-2"
+    ],
+    "tags": [
+      "vocabulary-and-copy"
+    ],
+    "lessons": [
+      "L-017"
+    ],
+    "evidence_kinds": [
+      "path",
+      "commit"
+    ],
+    "observation_digest": "sha256:e793d76ba0cc22e5cef459ff106520219c1250e2c81a20c28d5242295fbe2851",
+    "goal": "An operator running a live, shared process through a console presses a control to start one step of that process, expecting the control's label and the message confirming the action to describe the same event.",
+    "what_went_wrong": "The control's label names the action the operator is taking, starting or loading that step, while the message that follows, confirming success, names the resulting state the process is now in, using a different word for it. Both words are accurate: the action is exactly what the label named, and the process ends up exactly in the state the confirmation names. But because a different word appears in each place, back to back, an operator reading both in sequence has no way to be sure right away that a second, separate thing did not also happen.",
+    "why_it_matters": "Every operator who presses this control reads both mismatched words in the same moment, so the friction is small but universal rather than rare. It never stops the process from reaching the state the operator wanted, and it costs only a brief pause of doubt about whether something extra occurred. The mismatch is permanent by decision: keeping one word for the action and a different word for the resulting state was a deliberate choice, written down rather than left looking like an accident. Cosmetic.",
+    "resolution": "The wording stayed exactly as it was: one word names the operator's action, a different word names the process's resulting state, and an automated check that did not match the app's wording was corrected.\n\nRejected: changing either word so the two would match, since keeping separate words for the action and its resulting state was a decision made on purpose and written down."
+  },
+  {
+    "case": "C-018",
+    "title": "The payment confirmation message was invisible",
+    "surface": "payment-result",
+    "severity": 2,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-08",
+    "method": "code-read",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-1",
+      "wcag-1.4.3"
+    ],
+    "tags": [
+      "colour-and-contrast",
+      "feedback"
+    ],
+    "lessons": [
+      "L-005",
+      "L-007",
+      "L-013",
+      "L-016"
+    ],
+    "evidence_kinds": [
+      "commit",
+      "measurement"
+    ],
+    "observation_digest": "sha256:0ba9eb5c4496d1ca9d4393decfd553c326091f73aa2ce22db9a03e4a5430d9db",
+    "goal": "A shopper finished paying on a payment confirmation screen and needed to see a message confirming the order had gone through before leaving the page.",
+    "what_went_wrong": "The styling rule meant to color that confirmation panel targeted a class selector that nothing on the rendered page carried, so it was syntactically valid but matched zero elements, and no build step or type check caught the mismatch. With that rule not applying, the panel's background dropped to a plain default color, and its lettering — styled white through an unrelated rule — left almost no contrast at all: a ratio of 1.00:1.",
+    "why_it_matters": "Because the failure lived in a rule that ran on every page load rather than in one broken page, every shopper who finished paying saw the same blank result, with nothing on screen to reassure them the charge had gone through. Some were left unsure whether to retry the payment or contact support, a real risk of double charges and lost trust that persisted until the underlying rule was found. Serious.",
+    "resolution": "The team chose to delete the failing rule entirely rather than patch it back into place. Rejected: restoring the rule to its original definition, since doing so would still have paired the panel and its text in colors well under an accepted minimum contrast ratio (about 1.75:1) — a quieter version of the same problem, on a panel narrow enough to show only around 96px of readable width at a 320px screen width. The fix instead left the panel with a background and text combination that measures 16.27:1, comfortably above accessible minimums."
+  },
+  {
+    "case": "C-019",
+    "title": "The sign-in and sign-up pages forced 180px of pointless scroll",
+    "surface": "auth",
+    "severity": 3,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-08",
+    "method": "browser-audit",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-8"
+    ],
+    "tags": [
+      "layout"
+    ],
+    "lessons": [
+      "L-006"
+    ],
+    "evidence_kinds": [
+      "commit"
+    ],
+    "observation_digest": "sha256:148ec384025b2c2b8999f4284e054fc5f0a40c808db254e90c875e8fc5c0b024",
+    "goal": "A visitor trying to sign in to an existing account, or to create a new one, opened the corresponding page and expected it to end where the browser window ended, the way every other page on the surrounding site did.",
+    "what_went_wrong": "On both pages, an outer container was already styled to occupy the entire browser viewport, and an inner element nested inside it carried its own separate rule to also occupy the full viewport. Nothing resolved the two rules against each other, so each was honored independently and their heights compounded into a page taller than the window itself. The scrollable content reached 1204 where the window itself measured only 1024, leaving a gap of dead scroll below the visible form.",
+    "why_it_matters": "Every visitor loading either page encountered the extra scroll space in the same way, since it depended on layout rules rather than data or account state, but the page still functioned, letting the visitor complete sign-in or account-creation once they scrolled past the empty space. The friction was minor rather than disruptive, since the task remained completable without external help, but it recurred on every visit to either page and eroded confidence in the site's polish. Moderate.",
+    "resolution": "The duplicate sizing instruction was removed from both pages, leaving only the surrounding layout responsible for filling the browser window. After the change, the rendered content matched the window exactly, with no leftover scroll space."
+  },
+  {
+    "case": "C-020",
+    "title": "New products went live the instant they were created",
+    "surface": "admin",
+    "severity": 1,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-08",
+    "method": "browser-audit",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-3",
+      "nielsen-5"
+    ],
+    "tags": [
+      "controls-and-state"
+    ],
+    "lessons": [
+      "L-008",
+      "L-009",
+      "L-012"
+    ],
+    "evidence_kinds": [
+      "commit"
+    ],
+    "observation_digest": "sha256:6b51b32a3c714e6b25cfbd4472d13931519a6fa3c7347e2853291b4b8f6c33f6",
+    "goal": "An operator was using an admin creation form to add a new record to a system, intending to save it in a state that was not visible to the public until it was ready for release.",
+    "what_went_wrong": "A visibility toggle existed on the screen for updating an existing item but was missing from the separate screen used to create one. The server-side process that assembled a new entry always set its visibility to public regardless of what the create screen submitted, with no way for the form to override that.",
+    "why_it_matters": "This affected anyone creating new material through that admin form, since the missing control meant every single new entry, without exception, went public before it was finished. There was no warning at save time and no sign afterward that anything unintended had occurred, so a draft could sit fully visible for as long as it took until someone happened to spot it. The outcome could not be prevented and could not be detected after the fact. Blocking.",
+    "resolution": "The missing visibility setting was added to the creation form as well, defaulting new entries to hidden until an operator chose otherwise, with short guidance beside it. The initial fix was incomplete: server-side logic that assembled a new entry still forced it to be public regardless of the form, and a separate cleanup step earlier in the pipeline discarded that field from the incoming request before it reached storage, so the new toggle would have had no real effect. Both of those were corrected, and the full path was confirmed by reading the saved entry back from the server afterward."
+  },
+  {
+    "case": "C-021",
+    "title": "The admin could never save an image it had just uploaded",
+    "surface": "admin",
+    "severity": 1,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-08",
+    "method": "browser-audit",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-9"
+    ],
+    "tags": [
+      "feedback",
+      "controls-and-state"
+    ],
+    "lessons": [
+      "L-003",
+      "L-010",
+      "L-012"
+    ],
+    "evidence_kinds": [
+      "path",
+      "commit"
+    ],
+    "observation_digest": "sha256:72ca7a229e9de1f932730c1d83e58fa47378fda13fee371fc6f5d57f47184fb7",
+    "goal": "An operator working inside an admin form that included a file upload was trying to finish updating a record: attach a new file, watch the upload complete, then save so the change would stick.",
+    "what_went_wrong": "Behind the scenes, one server check accepted only a complete web address with its own scheme and host, and turned away anything shorter, such as a path that begins with a single slash and depends on the current site to fill in the rest. Yet the upload handler on that same server always produced exactly that short, slash-prefixed form when it returned the location of a newly stored file. In effect, an output the backend manufactured for the operator on one request was turned right back around and rejected by a stricter rule inside the very same backend on the following request, and the failure notice repeated that machine-made value back verbatim.",
+    "why_it_matters": "The clash was not occasional; it happened on every save that followed a fresh upload, striking the exact users a form like this most needs to work for, the ones adding or updating content day to day. Because the record could never be stored once this state was reached, there was no workaround available inside the form itself, only a dead end after work already appeared to have succeeded. That combination was a guaranteed failure with no visible way through it. Blocking.",
+    "resolution": "The team resolved this on the validation side rather than changing what the upload step returns, since the short, site-relative form was the correct shape for this value in context. Rejected: forcing every submitted value into a complete web address instead, because that would only have hidden the disagreement behind an assumption the system had deliberately avoided everywhere else. While making the fix, an unrelated crash triggered by an unusual input on the same check was also closed, and every other place in the code that relied on that check was reviewed and brought into line, not only the one spot where the problem first turned up."
+  },
+  {
+    "case": "C-022",
+    "title": "Infrastructure failures displayed to the user as authentication failures",
+    "surface": "admin",
+    "severity": 2,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-08",
+    "method": "browser-audit",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-9"
+    ],
+    "tags": [
+      "feedback",
+      "vocabulary-and-copy"
+    ],
+    "lessons": [
+      "L-004",
+      "L-012",
+      "L-017"
+    ],
+    "evidence_kinds": [
+      "commit"
+    ],
+    "observation_digest": "sha256:0cea0efb53e404a137cd3fe3e570b48a657ce11dbbf295252931461fb97e3b54",
+    "goal": "An operator was trying to sign in at an administrative entry point in order to reach every page behind it that required a logged-in session, the kind of console used to manage a site day to day rather than the public-facing parts of it.",
+    "what_went_wrong": "The server-side check that decided whether a caller held a valid session treated unlike conditions as interchangeable: a dropped database connection, a request that ran past its time limit, a fault raised at the storage-client level, and a password that really was wrong. Each of these produced one and the same refusal — an identical HTTP status carrying an identical reason — so a brief outage in a service the admin pages relied on was impossible to tell apart, from the browser's side, from a mistyped password.",
+    "why_it_matters": "This kind of failure could recur any time the backend infrastructure had a bad moment, not just once. Every occurrence looked, from the operator's side, exactly like having typed the wrong password, so an operator with the correct credentials could be shut out of the entire administrative area, retry, and be refused again, with no sign that the fault lay outside their own memory. Left uninvestigated, the same false signal would keep repeating indefinitely. Serious.",
+    "resolution": "The fix separates the two situations at the source: an infrastructure failure now returns its own distinct status and its own distinct reason, kept apart from a genuine sign-in failure, which is otherwise handled exactly as before. While making that change, a second occurrence of the identical mistake was found in unrelated cleanup logic that ran on every request and was corrected in the same round of work. A third occurrence of the same general pattern later turned up elsewhere in the system. Rejected: treating the pattern as fully eliminated once the first two instances were corrected; the team logged it instead as a pattern worth continuing to search for across the rest of the system."
+  },
+  {
+    "case": "C-023",
+    "title": "Add to cart gives no sign that anything happened",
+    "surface": "product-detail",
+    "severity": 2,
+    "preventive": false,
+    "status": "planned",
+    "observed": "2026-09",
+    "method": "user-report",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-1",
+      "wcag-4.1.3",
+      "law-fitts-law"
+    ],
+    "tags": [
+      "feedback"
+    ],
+    "lessons": [
+      "L-001",
+      "L-002"
+    ],
+    "evidence_kinds": [
+      "path"
+    ],
+    "observation_digest": "sha256:24f7e336ac8e91be8b70c80689fe54f430522dd63bad9e9bcb272d51fce34d2a",
+    "goal": "A shopper on a page showing a single item's details selects an action meant to add that item to an order in progress, expecting some sign that the action took effect before deciding whether to keep browsing or move toward checkout.",
+    "what_went_wrong": "After the action fires, nothing on the page itself changes in any way a shopper would readily notice. The sole visible update anywhere on the screen is a small counter tucked into the corner of the page header, and that counter sits outside any region a screen reader announces on its own. Everything else on the screen, including the area around the control that was activated, stays exactly as it was before the action ran.",
+    "why_it_matters": "Because the only feedback appears in a corner a shopper has no reason to be watching, someone can add multiple items without realizing it, or believe an attempt failed and press the control again out of doubt. Anyone relying on a screen reader gets no signal whatsoever, since the counter update is invisible to assistive technology and no other part of the page speaks up. The gap recurs on every add attempt across the surface, undermining trust in an action performed repeatedly on the way to purchase. Serious.",
+    "resolution": "Under consideration is an on-screen confirmation that appears at the moment the control is activated, paired with a link to review the order so far, plus a persistent marker beside the control to show the item is now in the order. A hidden status area would be filled in at that same moment so a screen reader announces the update without the shopper having to search for it. A later phase being discussed would animate the header counter, guarded so it can be turned off for anyone who prefers reduced motion, with a fuller preview of the order deferred beyond that."
+  },
+  {
+    "case": "C-024",
+    "title": "A turn-ending summary bundled two unrelated decisions into one sentence, and the reader could not tell what was being requested",
+    "surface": "agent-response",
+    "severity": 2,
+    "preventive": false,
+    "status": "fixed",
+    "observed": "2026-09",
+    "method": "user-report",
+    "backfilled": false,
+    "heuristics": [
+      "nielsen-2",
+      "nielsen-6",
+      "principle-one-decision-per-request"
+    ],
+    "tags": [
+      "vocabulary-and-copy",
+      "feedback"
+    ],
+    "lessons": [
+      "L-015"
+    ],
+    "evidence_kinds": [
+      "quote"
+    ],
+    "observation_digest": "sha256:c1b48408f94f194b7e0189c1a1be84fe2140f86f5e1f879e377b97395c26bc7f",
+    "goal": "An assistant user was midway through a working session, wrapping up a turn, expecting its closing summary to name what still needed a decision from them.",
+    "what_went_wrong": "The summary folded two unrelated open items into a single sentence: one a judgment call spanning several separate records, the other simply whether to run a single action. Nothing marked either part as needing a response, no options were spelled out for either, and one term carried over from earlier in the exchange without being defined at any point. The reader had no way to separate the two items, no signal for what shape a reply should take, and lost a full turn working out what was even being requested, rather than responding to either part. A single unrelated item raised elsewhere in the same exchange, phrased on its own and clearly marked as needing a response, produced a reply with no friction — the difficulty tracked how the two items were packaged together, not what either one contained.",
+    "why_it_matters": "Every turn that closes this way lands on the same reader, who cannot partly respond to a bundled sentence the way they could split a written request apart themselves — they either guess wrong or lose a turn working out what was meant. The pattern repeated across three consecutive turns in one session before it was named. Serious.",
+    "resolution": "The fix is procedural, not technical: raise one decision per turn, name the options, state what happens after each, and define any term the reader has not used themselves before relying on it. The rule ships as a lesson an assistant reads before writing a closing summary. An automated check was tried and declined: the surface that would need watching is the assistant's own prose, not a file edit, so the only hook available runs after the turn has ended, and the narrowest detector that caught this defect fired 7 times across 460 real messages with 1 true hit.\n\nRejected: leaving the bundled sentence as it was and adding a clarifying line after it, since the real failure is structural — two decisions sharing one sentence with no place to put two separate replies — not a shortage of explanation. Also rejected: shipping that after-the-fact check in advisory form, since six false flags for every true one would teach the reader to ignore it."
+  },
+  {
+    "case": "C-025",
+    "title": "Editing a product can rewrite attributes the admin never touched",
+    "surface": "admin",
+    "severity": 2,
+    "preventive": false,
+    "status": "open",
+    "observed": "2026-09",
+    "method": "code-read",
+    "backfilled": true,
+    "heuristics": [
+      "nielsen-1",
+      "nielsen-5"
+    ],
+    "tags": [
+      "controls-and-state"
+    ],
+    "lessons": [
+      "L-009"
+    ],
+    "evidence_kinds": [
+      "path",
+      "commit"
+    ],
+    "observation_digest": "sha256:17a882862aee82baa83805d7c3b7becbbd4bd5b5221313c7ce2a2b86f98f1f63",
+    "goal": "An operator was using an administrative screen to correct one field on a saved record and save the change, expecting nothing else on it to move.",
+    "what_went_wrong": "An editing form reads each stored value into a box and writes it back on save; four kinds of value change on that trip. An absent true-or-false state comes back as a definite false; an existing one survives untouched. A multi-part value is joined into one line for editing and split apart again: a joining character or line break inside a part yields extra parts, a non-text part becomes text, and an empty multi-part or blank optional value is dropped rather than kept empty. A value in a shape with no matching box here is printed and resaved as a meaningless placeholder word. Each replaces the whole extra-fields set at once instead of folding in one change, and the check passes all three as well-formed. A value marking a moment in time, stored as a bare number, instead fails loudly: sent back as digits, rejected by that check, the whole save turns back, the edit included, naming a value the operator never opened, on every retry.",
+    "why_it_matters": "None of this touches today's four kinds of record: every value in play is a number, a line of text, or one fixed pick, none with a stored default, so these modes have nothing to touch yet. Adding the first true-or-false, time-stamped, or multi-part definition turns it all on for every save on every record of that kind, whatever field was meant. It was reasoned out from how the round trip and its check are built, not watched happening. Three of the four leave nothing to notice: the screen shows exactly what it just saved; only an earlier copy would show the difference. Serious.",
+    "resolution": "No direction has been picked; the matter stays open, assigned but undated. The record's own proposal is a matched translation step for every value kind the system defines, and, where no box exists, leaving the value untouched rather than overwritten. Rejected: no alternative has been weighed, since none has been put forward."
+  }
+]

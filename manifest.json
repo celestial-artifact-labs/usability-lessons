@@ -1,0 +1,29 @@
+{
+  "profile": "public",
+  "version": "2026.11.06",
+  "generated": "2026-11-06",
+  "counts": {
+    "findings": 23,
+    "lessons": 17,
+    "by_surface": {
+      "operator-console": 4,
+      "landing": 2,
+      "storefront": 2,
+      "checkout": 1,
+      "catalog": 1,
+      "game": 3,
+      "portfolio": 2,
+      "payment-result": 1,
+      "auth": 1,
+      "admin": 4,
+      "product-detail": 1,
+      "agent-response": 1
+    },
+    "by_severity": {
+      "1": 4,
+      "2": 8,
+      "3": 5,
+      "4": 2
+    }
+  }
+}
