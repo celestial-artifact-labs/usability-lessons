@@ -17,6 +17,10 @@ disappeared entirely. A section is left out when it is empty. Everything
 below this introduction is written by the release tooling, which adds each
 new entry at the top and leaves this introduction alone.
 
+## 2026.11.2 - 2026-11-06
+
+Counts as of this release: 23 public case(s), 17 public lesson(s).
+
 ## 2026.11.1 - 2026-11-06
 
 ### Added

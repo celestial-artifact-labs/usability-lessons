@@ -1,0 +1,9 @@
+{
+  "name": "usability-lessons",
+  "description": "Check a design or change against a public set of usability lessons and cases.",
+  "author": {
+    "name": "Celestial Artifact Labs"
+  },
+  "license": "CC0-1.0",
+  "version": "2026.11.2"
+}

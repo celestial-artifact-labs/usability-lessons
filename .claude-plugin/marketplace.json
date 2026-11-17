@@ -1,0 +1,12 @@
+{
+  "name": "celestial-public",
+  "owner": { "name": "Celestial Artifact Labs" },
+  "metadata": { "description": "Public plugins from Celestial Artifact Labs." },
+  "plugins": [
+    {
+      "name": "usability-lessons",
+      "source": "./",
+      "description": "Check a design or change against a public set of usability lessons and cases."
+    }
+  ]
+}
