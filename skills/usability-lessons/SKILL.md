@@ -25,13 +25,13 @@ argument-hint: "[surface]"
 
 Print the lessons and open cases that apply. Invoked as `/usability-lessons:usability-check [surface]`, or by the model when a session is about to change something a person has to read or act on.
 
-**This skill never writes.** No file is created, edited, appended to or deleted while it runs. The only shell command it may need is `date`, to compute an age.
+**This skill never writes.** No file is created, edited, appended to or deleted while it runs. It needs no shell command.
 
 **Every id you print comes from a file you read in this run.** Never recall a lesson id, a case id, a rule or a severity from memory or from an earlier session. If a file cannot be read, say so and print less. Never invent a lesson.
 
 ## Step 1: read the data files
 
-Four files sit at the plugin root. Read them by these exact paths and no others; do not search the filesystem and do not guess a path.
+Four data files sit at the plugin root. Read them by these exact paths; do not search the filesystem and do not guess a path. Step 2 also reads the plugin's own `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json` for its version, and nothing else.
 
 | File | What you take from it |
 | --- | --- |
@@ -48,15 +48,17 @@ usability lessons unavailable: <file> could not be read. Update the plugin and t
 
 The data carries no project names, evidence, paths or quotes. Do not claim detail it does not hold.
 
-## Step 2: name the source and its age, always
+## Step 2: name the source and its date, always
 
-The first line of every answer says which data it came from and how old it is:
+The first line of every answer says which release the data came from and the date of the lessons:
 
 ```text
-usability lessons 2026.11.06 (generated 2026-11-06, 11 days old)
+usability lessons 2026.11.3 (lessons as of 2026-11-06)
 ```
 
-Age is today's date minus `generated` in whole days. When it is more than 30 days, append `, stale` and add one line after the answer: `This data is older than 30 days; update the plugin for current lessons.`
+The version is `version` in `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`, the number `/plugin` shows people. If that file or field cannot be read, use `version` from `manifest.json` instead; this does not stop the skill. The date is `generated` from `manifest.json`, printed as is. Print no age and no day count.
+
+Never call the lessons stale, old or out of date, and never tell the person to update, based on the date: this plugin reads local files only and cannot see whether a newer release exists. If the person asks how to get newer lessons, say: refresh the marketplace, update the plugin, then restart Claude Code. Do not claim a newer release exists.
 
 ## Step 3: no argument
 
