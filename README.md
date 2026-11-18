@@ -71,6 +71,8 @@ Then restart Claude Code.
 
 The plugin only reads the data files in this repository. It writes nothing, has no hooks and sends nothing anywhere.
 
+The plugin pre-approves reading its own installed folder, `~/.claude/plugins/cache/celestial-public/usability-lessons/`, so Claude Code does not ask once per file, and it pre-approves nothing else. If Claude Code keeps its files somewhere else, or your organization allows only its own managed permission rules, it may still ask before reading the plugin's own installed copies of these data files.
+
 ## Files
 
 | File | What it is |
