@@ -10,6 +10,7 @@ description: >-
 user-invocable: true
 disable-model-invocation: false
 argument-hint: "[surface]"
+allowed-tools: Read(~/.claude/plugins/cache/celestial-public/usability-lessons/**)
 ---
 
 <!--
@@ -19,6 +20,9 @@ argument-hint: "[surface]"
   re-earned. An agent's own prose is a surface too, and nothing intercepts a
   written answer, so a rule read beforehand is the only mechanism there is.
   It never writes anything.
+  Why the frontmatter carries a Read rule: it pre-approves reading this
+  plugin's own installed folder, so a first run does not ask once per file,
+  and it grants nothing else.
 -->
 
 # Usability check
@@ -31,7 +35,7 @@ Print the lessons and open cases that apply. Invoked as `/usability-lessons:usab
 
 ## Step 1: read the data files
 
-Four data files sit at the plugin root. Read them by these exact paths; do not search the filesystem and do not guess a path. Step 2 also reads the plugin's own `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json` for its version, and nothing else.
+Four data files sit at the plugin root. Read them with the Read tool, by these exact paths; do not search the filesystem and do not guess a path. Step 2 also reads the plugin's own `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json` for its version, and nothing else.
 
 | File | What you take from it |
 | --- | --- |
